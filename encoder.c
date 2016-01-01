@@ -80,4 +80,7 @@ __interrupt void pcint0(void) {
         }
         state = 0;
     }
+    if (!prevBits) {
+        state = 0;
+    }
 }
