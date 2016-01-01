@@ -16,8 +16,8 @@
 #define MS2TIMER_TICKS(MS) \
     ((MS * (CPU_CLOCK / 1000)) / TIMER_PRESCALER)
 
-const uint16_t onTicks = MS2TIMER_TICKS(250);
-const uint16_t offTicks = MS2TIMER_TICKS(250);
+const uint16_t onTicks = MS2TIMER_TICKS(80);
+const uint16_t offTicks = MS2TIMER_TICKS(90);
 
 static void producePulseA() {
     pgStartChannelA(onTicks, offTicks);
@@ -55,16 +55,12 @@ int main( void )
         if (pulsesLeft > 0) {
             producePulseA();
             __disable_interrupt();
-            if (pulsesLeft > 0) {
-                --pulsesLeft;
-            }
+            --pulsesLeft;
             __enable_interrupt();
         } else if (pulsesLeft < 0) {
             producePulseB();
             __disable_interrupt();
-            if (pulsesLeft < 0) {
-                ++pulsesLeft;
-            }
+            ++pulsesLeft;
             __enable_interrupt();
         } else {
             __no_operation();
